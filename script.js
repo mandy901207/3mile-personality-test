@@ -2,36 +2,56 @@ const personalities = {
   collector: {
     name: "沿途收藏家",
     emoji: "📸",
-    tagline: "我想好好感受這趟旅程。",
-    description: "你很容易注意到沿途值得記住的東西。風景、美食、城市、文化、照片和旅途中的小故事，都是你環島的一部分。就算遇到辛苦的時候，你也常能找到『這一段其實滿值得記住』的理由。",
+    tagline: "「來都來了，當然要好好感受這一路。」",
+    description: [
+      "你在意的不只是有沒有騎完，也在意一路看到了什麼、吃到了什麼、去了哪些地方。",
+      "風景、美食、城市特色，甚至某個不起眼的小瞬間，都可能成為你環島裡最值得記住的片段。你很可能就是那個會說「這裡超美」、「這個一定要吃」、「等等這張要拍！」的人。"
+    ],
+    keywords: ["風景", "體驗", "美食", "故事", "回憶"],
     maxScore: 8
   },
   challenger: {
     name: "熱血挑戰者",
     emoji: "🔥",
-    tagline: "我想看看自己到底能做到多少。",
-    description: "你對挑戰和成就感特別有反應。遇到長坡、疲累或比較硬的路段，反而容易冒出『都來了，就把它完成』的念頭。你享受突破自己的感覺，但真正環島時也要記得：熱血不等於逞強，安全永遠放前面。",
+    tagline: "「越難，我越想證明自己做得到。要拼 🔥」",
+    description: [
+      "明明很累、很硬，你卻偏偏更想把它完成。長坡、逆風、最後幾公里雖然痛苦，但也正因為難，才更不想認輸。",
+      "聽到「明天那段超硬」，別人可能開始擔心，你反而有點想知道：到底能有多硬？"
+    ],
+    keywords: ["挑戰", "突破", "不服輸", "毅力", "成就感"],
     maxScore: 10
   },
   teammate: {
     name: "隊伍黏著劑",
     emoji: "🤝",
-    tagline: "我想和大家一起完成。",
-    description: "對你來說，環島不只是把路騎完，而是和一群人一起走過這段旅程。你重視夥伴、共同回憶和隊伍氣氛，也很可能是會聊天、鼓勵別人、讓大家撐下去的人。",
+    tagline: "「去哪裡不是唯一重點，跟誰一起完成才最重要。」",
+    description: [
+      "環島當然要順利完騎，但真正讓這趟旅程變得特別的，往往是一路陪在身邊的那些人。",
+      "你重視夥伴和氣氛，也很容易注意大家的狀況。大家累到不想講話時，你可能就是還能冒出一句話，讓全隊重新笑出來的那個人。"
+    ],
+    keywords: ["夥伴", "陪伴", "氣氛", "共同回憶", "一起完成"],
     maxScore: 10
   },
   explorer: {
     name: "好奇探險家",
     emoji: "🧭",
-    tagline: "我想看看這趟旅程會發生什麼。",
-    description: "你喜歡新鮮感，也願意接受意料之外的事情。陌生的城市、第一次遇到的狀況、原本沒有安排好的體驗，都可能讓你覺得有趣。第3哩的探險精神仍建立在安全與團體行動上，不是偷偷脫隊去找神秘小路喔。",
+    tagline: "「不知道今天會遇到什麼，才是旅程最好玩的地方。」",
+    description: [
+      "你特別喜歡未知、新鮮感和第一次體驗。每天出發前，都不知道今天會是順風一路飛，還是逆風騎到懷疑人生；是好天氣，還是突然遇上大雨。",
+      "這些未知不一定輕鬆，但對你來說，也正因如此，環島才更有意思。"
+    ],
+    keywords: ["未知", "新鮮感", "第一次", "探索", "驚喜"],
     maxScore: 8
   },
   steady: {
     name: "穩定節奏型",
     emoji: "🛡️",
-    tagline: "我想用自己的節奏，穩穩把事情完成。",
-    description: "你不一定最衝，但很懂得評估狀況、分配體力和安排節奏。遇到突發事情時，比起慌張，你更容易先想清楚怎麼處理。你給人的感覺往往很可靠：不急著爆發，但很能走得長久。",
+    tagline: "「不是騎最快，是知道怎麼一路騎到底。」",
+    description: [
+      "你不會一味硬撐，而是習慣先看清楚狀況，再決定怎麼做。你知道什麼時候該出力、什麼時候該休息，也會留意裝備、體力和接下來的安排。",
+      "遇到狀況時，你通常比較不容易慌。你不一定是隊伍裡最顯眼的人，卻常常是讓人覺得「有你在就很可靠」的那一個。"
+    ],
+    keywords: ["節奏", "規劃", "冷靜", "可靠", "穩穩完成"],
     maxScore: 10
   }
 };
@@ -230,11 +250,11 @@ function validateCurrent() {
   const q = questions[state.currentIndex];
   const ans = state.answers[q.id];
   if (!ans || (q.type === "single" && !ans.selected) || (q.type === "multi" && (!ans.selected || ans.selected.length === 0))) {
-    alert("請先選擇答案再繼續。 ");
+    alert("請先選擇答案再繼續。");
     return false;
   }
   if (q.id === "q8" && ans.selected.includes("other") && !(ans.otherText || "").trim()) {
-    alert("你有勾選『其他』，請再填寫內容。 ");
+    alert("你有勾選『其他』，請再填寫內容。");
     return false;
   }
   return true;
@@ -272,7 +292,7 @@ function calculateResult() {
   }
 
   if (isTie) {
-    // 第一版先用固定順序處理極少數仍同分的情況，之後可替換成雙人格彩蛋或第二順位題。
+    // 目前保留既有第一版的固定順序處理極少數仍同分情況；之後若要做雙人格彩蛋可再更換。
     const fallbackOrder = ["challenger", "collector", "steady", "explorer", "teammate"];
     finalKey = fallbackOrder.find(key => leaders.includes(key)) || leaders[0];
   }
@@ -286,13 +306,12 @@ function renderResult() {
   document.getElementById("result-emoji").textContent = p.emoji;
   document.getElementById("result-name").textContent = p.name;
   document.getElementById("result-tagline").textContent = p.tagline;
-  document.getElementById("result-description").textContent = p.description;
-
-  const scoreGrid = document.getElementById("score-grid");
-  scoreGrid.innerHTML = Object.entries(personalities).map(([key, item]) => {
-    const pct = Math.round(result.rates[key] * 100);
-    return `<div class="score-chip"><strong>${item.emoji} ${item.name}</strong><span>符合度 ${pct}%</span></div>`;
-  }).join("");
+  document.getElementById("result-description").innerHTML = p.description
+    .map(text => `<p>${escapeHtml(text)}</p>`)
+    .join("");
+  document.getElementById("result-keywords").innerHTML = p.keywords
+    .map(keyword => `<span class="keyword">${escapeHtml(keyword)}</span>`)
+    .join("");
 
   console.log("匿名測驗結果（目前尚未送出到雲端）", {
     answers: state.answers,
