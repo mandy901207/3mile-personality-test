@@ -7,7 +7,7 @@ const personalities = {
       "你在意的不只是有沒有騎完，也在意一路看到了什麼、吃到了什麼、去了哪些地方。",
       "風景、美食、城市特色，甚至某個不起眼的小瞬間，都可能成為你環島裡最值得記住的片段。你很可能就是那個會說「這裡超美」、「這個一定要吃」、「等等這張要拍！」的人。"
     ],
-    keywords: ["風景", "體驗", "美食", "故事", "回憶"],
+    keywords: ["風景", "美食", "體驗", "回憶"],
     maxScore: 8
   },
   challenger: {
@@ -18,7 +18,7 @@ const personalities = {
       "明明很累、很硬，你卻偏偏更想把它完成。長坡、逆風、最後幾公里雖然痛苦，但也正因為難，才更不想認輸。",
       "聽到「明天那段超硬」，別人可能開始擔心，你反而有點想知道：到底能有多硬？"
     ],
-    keywords: ["挑戰", "突破", "不服輸", "毅力", "成就感"],
+    keywords: ["挑戰", "突破", "不服輸", "毅力"],
     maxScore: 10
   },
   teammate: {
@@ -29,7 +29,7 @@ const personalities = {
       "環島當然要順利完騎，但真正讓這趟旅程變得特別的，往往是一路陪在身邊的那些人。",
       "你重視夥伴和氣氛，也很容易注意大家的狀況。大家累到不想講話時，你可能就是還能冒出一句話，讓全隊重新笑出來的那個人。"
     ],
-    keywords: ["夥伴", "陪伴", "氣氛", "共同回憶", "一起完成"],
+    keywords: ["夥伴", "氣氛", "陪伴", "一起完成"],
     maxScore: 10
   },
   explorer: {
@@ -40,7 +40,7 @@ const personalities = {
       "你特別喜歡未知、新鮮感和第一次體驗。每天出發前，都不知道今天會是順風一路飛，還是逆風騎到懷疑人生；是好天氣，還是突然遇上大雨。",
       "這些未知不一定輕鬆，但對你來說，也正因如此，環島才更有意思。"
     ],
-    keywords: ["未知", "新鮮感", "第一次", "探索", "驚喜"],
+    keywords: ["未知", "探索", "新鮮感", "驚喜"],
     maxScore: 8
   },
   steady: {
@@ -51,8 +51,52 @@ const personalities = {
       "你不會一味硬撐，而是習慣先看清楚狀況，再決定怎麼做。你知道什麼時候該出力、什麼時候該休息，也會留意裝備、體力和接下來的安排。",
       "遇到狀況時，你通常比較不容易慌。你不一定是隊伍裡最顯眼的人，卻常常是讓人覺得「有你在就很可靠」的那一個。"
     ],
-    keywords: ["節奏", "規劃", "冷靜", "可靠", "穩穩完成"],
+    keywords: ["節奏", "規劃", "冷靜", "可靠"],
     maxScore: 10
+  }
+};
+
+
+const doubleRoles = {
+  "collector|challenger": {
+    tagline: "會玩，也會拼。",
+    description: "你既想把一路上的風景、美食和回憶好好收進旅程裡，遇到挑戰時又會燃起「都來了，我一定要做到」的那股勁。"
+  },
+  "collector|teammate": {
+    tagline: "美好的地方要記住，美好的回憶要一起創造。",
+    description: "對你來說，一趟好的環島不只有漂亮的風景，更重要的是和一群人一起留下值得回想的片段。"
+  },
+  "collector|explorer": {
+    tagline: "一邊收藏，一邊探索。",
+    description: "你喜歡把沿途值得記住的風景、美食和城市收進旅程，也對下一個沒去過的地方、沒遇過的事情充滿好奇。"
+  },
+  "collector|steady": {
+    tagline: "穩穩騎，也好好感受這一路。",
+    description: "你知道怎麼照顧自己的節奏，也不會因為趕路就錯過沿途值得看的東西。"
+  },
+  "challenger|teammate": {
+    tagline: "自己不認輸，也不想讓隊友掉隊。",
+    description: "你不只想證明自己做得到，也會想把身邊的人一起帶到終點。大家累的時候，你可能既會喊「撐一下！」，又會在旁邊幫忙打氣。"
+  },
+  "challenger|explorer": {
+    tagline: "未知越多，戰意越高。",
+    description: "越沒試過、越不知道會遇到什麼，你反而越想去看看。挑戰對你來說不只是困難，也是一次「來都來了，試試看啊！」的機會。"
+  },
+  "challenger|steady": {
+    tagline: "該穩的時候穩，該拼的時候拼。",
+    description: "你有不服輸、想突破自己的衝勁，也知道怎麼掌握節奏、分配體力。不是一股腦往前衝，而是知道什麼時候該拼到底。"
+  },
+  "teammate|explorer": {
+    tagline: "未知的旅程，有大家在就更好玩。",
+    description: "你喜歡和一群人一起面對未知。今天會遇到什麼不一定重要，重要的是身邊有人可以一起經歷、一起吐槽、一起笑。"
+  },
+  "teammate|steady": {
+    tagline: "顧好自己，也顧得到身邊的人。",
+    description: "你既會注意大家的狀況，也懂得冷靜掌握節奏。隊伍有點亂、有人有點累時，你很可能是那種能讓大家安心的人。"
+  },
+  "explorer|steady": {
+    tagline: "保有好奇，也保有判斷。",
+    description: "你對未知充滿好奇，但不是毫無準備地往前衝。遇到新的狀況時，你通常會先觀察、調整，再繼續看看今天還會發生什麼。"
   }
 };
 
@@ -276,10 +320,10 @@ function calculateResult() {
   });
 
   const maxRate = Math.max(...Object.values(rates));
-  const leaders = Object.keys(rates).filter(key => Math.abs(rates[key] - maxRate) < 1e-9);
+  let leaders = Object.keys(rates).filter(key => Math.abs(rates[key] - maxRate) < 1e-9);
 
   let finalKey = leaders[0];
-  let isTie = leaders.length > 1;
+  let unresolvedTie = leaders.length > 1;
 
   if (leaders.length > 1) {
     const q5 = questions.find(q => q.id === "q5");
@@ -287,31 +331,77 @@ function calculateResult() {
     const q5Option = q5.options.find(o => o.id === q5Answer);
     if (q5Option?.personality && leaders.includes(q5Option.personality)) {
       finalKey = q5Option.personality;
-      isTie = false;
+      leaders = [finalKey];
+      unresolvedTie = false;
     }
   }
 
-  if (isTie) {
-    // 目前保留既有第一版的固定順序處理極少數仍同分情況；之後若要做雙人格彩蛋可再更換。
-    const fallbackOrder = ["challenger", "collector", "steady", "explorer", "teammate"];
-    finalKey = fallbackOrder.find(key => leaders.includes(key)) || leaders[0];
+  let doubleKeys = null;
+  if (unresolvedTie) {
+    const stableOrder = ["collector", "challenger", "teammate", "explorer", "steady"];
+    const sorted = [...leaders].sort((a, b) => {
+      if (raw[b] !== raw[a]) return raw[b] - raw[a];
+      return stableOrder.indexOf(a) - stableOrder.indexOf(b);
+    });
+    doubleKeys = sorted.slice(0, 2);
   }
 
-  return { finalKey, raw, rates, leaders, unresolvedTie: isTie };
+  return { finalKey, raw, rates, leaders, unresolvedTie, doubleKeys };
+}
+
+function renderMatchRates(rates, highlightedKeys) {
+  const list = document.getElementById("match-list");
+  const order = ["collector", "challenger", "teammate", "explorer", "steady"];
+  list.innerHTML = order.map(key => {
+    const p = personalities[key];
+    const percent = Math.round(rates[key] * 100);
+    const active = highlightedKeys.includes(key) ? " active" : "";
+    return `
+      <div class="match-row${active}">
+        <div class="match-label"><span>${p.emoji}</span><span>${escapeHtml(p.name)}</span></div>
+        <div class="match-bar"><span style="width:${percent}%"></span></div>
+        <div class="match-value">${percent}%</div>
+      </div>`;
+  }).join("");
 }
 
 function renderResult() {
   const result = calculateResult();
-  const p = personalities[result.finalKey];
-  document.getElementById("result-emoji").textContent = p.emoji;
-  document.getElementById("result-name").textContent = p.name;
-  document.getElementById("result-tagline").textContent = p.tagline;
-  document.getElementById("result-description").innerHTML = p.description
-    .map(text => `<p>${escapeHtml(text)}</p>`)
-    .join("");
-  document.getElementById("result-keywords").innerHTML = p.keywords
-    .map(keyword => `<span class="keyword">${escapeHtml(keyword)}</span>`)
-    .join("");
+  const eyebrow = document.getElementById("result-eyebrow");
+  const emojiEl = document.getElementById("result-emoji");
+  const nameEl = document.getElementById("result-name");
+  const taglineEl = document.getElementById("result-tagline");
+  const descriptionEl = document.getElementById("result-description");
+  const keywordBox = document.getElementById("keyword-box");
+  const keywordList = document.getElementById("result-keywords");
+
+  if (result.unresolvedTie && result.doubleKeys?.length === 2) {
+    const [a, b] = result.doubleKeys;
+    const p1 = personalities[a];
+    const p2 = personalities[b];
+    const pairKey = [a, b].sort((x, y) => ["collector", "challenger", "teammate", "explorer", "steady"].indexOf(x) - ["collector", "challenger", "teammate", "explorer", "steady"].indexOf(y)).join("|");
+    const combo = doubleRoles[pairKey];
+
+    eyebrow.textContent = "你解鎖了少見的雙重角色！";
+    emojiEl.textContent = `${p1.emoji} × ${p2.emoji}`;
+    emojiEl.classList.add("double-emoji");
+    nameEl.textContent = `${p1.name} × ${p2.name}`;
+    taglineEl.textContent = combo ? combo.tagline : "兩種特質，同時上線。";
+    descriptionEl.innerHTML = `<p>${escapeHtml(combo ? combo.description : "你同時帶著兩種不同的環島特質，會依照情境展現不同的一面。")}</p>`;
+    keywordBox.hidden = true;
+    renderMatchRates(result.rates, result.doubleKeys);
+  } else {
+    const p = personalities[result.finalKey];
+    eyebrow.textContent = "你的環島角色是";
+    emojiEl.textContent = p.emoji;
+    emojiEl.classList.remove("double-emoji");
+    nameEl.textContent = p.name;
+    taglineEl.textContent = p.tagline;
+    descriptionEl.innerHTML = p.description.map(text => `<p>${escapeHtml(text)}</p>`).join("");
+    keywordBox.hidden = false;
+    keywordList.innerHTML = p.keywords.map(keyword => `<span class="keyword">${escapeHtml(keyword)}</span>`).join("");
+    renderMatchRates(result.rates, [result.finalKey]);
+  }
 
   console.log("匿名測驗結果（目前尚未送出到雲端）", {
     answers: state.answers,
@@ -321,11 +411,11 @@ function renderResult() {
 
 function escapeHtml(str) {
   return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 document.getElementById("start-btn").addEventListener("click", () => {
@@ -347,8 +437,14 @@ nextBtn.addEventListener("click", () => {
     state.currentIndex += 1;
     renderQuestion();
   } else {
-    renderResult();
-    showScreen(resultScreen);
+    try {
+      renderResult();
+      showScreen(resultScreen);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      console.error("結果頁產生失敗：", error);
+      alert("結果頁載入時發生問題，請重新整理後再試一次。若仍無法顯示，請告訴第 3 哩工作人員。");
+    }
   }
 });
 

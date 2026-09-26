@@ -286,3 +286,41 @@ a.info-item:hover { border-color: rgba(31,111,93,.35); transform: translateY(-1p
   .keyword-box, .safety-note, .cta-box, .result-closing { padding: 14px; }
   .info-item { padding: 10px; }
 }
+
+
+/* v3：符合度與雙重角色 */
+.match-box {
+  margin: 14px 0 4px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #f8faf8;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+.match-title { font-weight: 800; text-align: center; }
+.match-hint { color: var(--muted); font-size: .82rem; text-align: center; margin: 3px 0 10px; }
+.match-list { display: grid; gap: 7px; }
+.match-row {
+  display: grid;
+  grid-template-columns: 125px minmax(90px, 1fr) 42px;
+  align-items: center;
+  gap: 9px;
+  font-size: .86rem;
+  color: #66706c;
+}
+.match-label { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.match-bar { height: 7px; background: #e4e8e6; border-radius: 999px; overflow: hidden; }
+.match-bar span { display: block; height: 100%; background: #a9bbb5; border-radius: inherit; }
+.match-value { text-align: right; font-variant-numeric: tabular-nums; }
+.match-row.active { color: var(--accent-dark); font-weight: 800; }
+.match-row.active .match-bar span { background: var(--accent); }
+.double-emoji { font-size: 3rem; letter-spacing: .04em; }
+#keyword-box[hidden] { display: none; }
+
+@media (max-width: 560px) {
+  .match-box { padding: 12px; }
+  .match-row { grid-template-columns: 112px minmax(72px, 1fr) 38px; gap: 7px; font-size: .8rem; }
+  .match-label { gap: 4px; }
+  .match-bar { height: 6px; }
+  .double-emoji { font-size: 2.6rem; }
+}
