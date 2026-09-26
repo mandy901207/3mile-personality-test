@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第3哩單車環島人格測驗</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section id="start-screen" class="screen active">
+      <div class="hero-card">
+        <div class="eyebrow">東吳第3哩單車環島</div>
+        <h1>你是哪一種環島人格？</h1>
+        <p class="lead">8 題小測驗，看看如果真的踏上環島，你會成為隊伍裡的哪一種人。</p>
+        <div class="pill-row">
+          <span class="pill">匿名</span>
+          <span class="pill">不用登入</span>
+          <span class="pill">約 1–2 分鐘</span>
+        </div>
+        <button id="start-btn" class="primary-btn">開始測驗</button>
+      </div>
+    </section>
+
+    <section id="quiz-screen" class="screen">
+      <div class="quiz-card">
+        <div class="topbar">
+          <div class="brand">第3哩人格測驗</div>
+          <div id="progress-text" class="progress-text">1 / 8</div>
+        </div>
+        <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+
+        <div id="question-wrap"></div>
+
+        <div class="nav-row">
+          <button id="back-btn" class="secondary-btn">上一題</button>
+          <button id="next-btn" class="primary-btn">下一題</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="result-screen" class="screen">
+      <div class="result-card">
+        <div class="eyebrow">你的環島人格是</div>
+        <div id="result-emoji" class="result-emoji">📸</div>
+        <h2 id="result-name">沿途收藏家</h2>
+        <p id="result-tagline" class="result-tagline"></p>
+        <p id="result-description" class="result-description"></p>
+
+        <div class="result-grid" id="score-grid"></div>
+
+        <div class="safety-note">
+          <strong>第3哩小提醒</strong>
+          <p>不管你是哪一型，真正環島時還是以安全、團體行動與互相照應為優先。</p>
+        </div>
+
+        <div class="cta-box">
+          <h3>想真的騎一圈嗎？</h3>
+          <p>之後可以把這裡換成 IG、說明會或其他活動資訊。</p>
+          <a href="#" class="primary-btn link-btn" aria-disabled="true">活動資訊預留</a>
+        </div>
+
+        <button id="restart-btn" class="secondary-btn full">再測一次</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
