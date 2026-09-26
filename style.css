@@ -324,3 +324,31 @@ a.info-item:hover { border-color: rgba(31,111,93,.35); transform: translateY(-1p
   .match-bar { height: 6px; }
   .double-emoji { font-size: 2.6rem; }
 }
+
+
+/* v4：測驗性質說明 */
+.quiz-disclaimer {
+  color: #7a756c;
+  line-height: 1.55;
+}
+.quiz-disclaimer.short {
+  margin: 10px auto 0;
+  max-width: 520px;
+  font-size: .78rem;
+  opacity: .9;
+}
+.quiz-disclaimer.full-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f7f5ef;
+  border: 1px solid #e5dfd4;
+  text-align: left;
+  font-size: .84rem;
+}
+.quiz-disclaimer.full-note strong { color: #5f5a51; }
+
+@media (max-width: 560px) {
+  .quiz-disclaimer.short { font-size: .74rem; margin-top: 9px; }
+  .quiz-disclaimer.full-note { font-size: .8rem; padding: 11px 12px; }
+}
