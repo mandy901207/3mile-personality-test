@@ -785,3 +785,168 @@ button, .option-card, .link-btn {
     font-size: .94rem;
   }
 }
+
+
+/* ===== 0929_v3 調整 ===== */
+
+/* 首頁：主標題改為更直覺的一句，副標題保留原本意境 */
+.hero-title {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-subtitle {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+/* 四種環島傾向：縮小卡片高度與視覺重量 */
+.tendency-card {
+  padding: 17px 20px;
+}
+
+.tendency-card h2 {
+  font-size: 1.17rem;
+  font-weight: 800;
+}
+
+.section-subtitle {
+  margin: 1px 0 12px;
+  font-size: .91rem;
+  line-height: 1.45;
+}
+
+.tendency-list {
+  gap: 8px;
+}
+
+.tendency-row {
+  grid-template-columns: minmax(124px, 162px) 1fr 44px;
+  gap: 9px;
+}
+
+.tendency-name {
+  font-size: .94rem;
+  font-weight: 650;
+}
+
+.tendency-row.is-result .tendency-name,
+.tendency-row.is-result .tendency-value {
+  font-weight: 800;
+}
+
+.tendency-track {
+  height: 9px;
+}
+
+.tendency-value {
+  font-size: .94rem;
+  font-weight: 650;
+}
+
+.tendency-note {
+  margin: 11px 0 0;
+  color: #858886;
+  font-size: .79rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* 收尾：單純作為一句話，不特別強調 */
+.closing-card {
+  padding: 17px 20px;
+  background: var(--sand);
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.closing-card p {
+  margin: 0;
+  color: inherit;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.closing-highlight {
+  color: inherit !important;
+  font-weight: 400 !important;
+}
+
+/* 舊版用來固定第二行的設定已不再需要 */
+.hero-title .hero-title-long {
+  white-space: normal;
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: clamp(1.9rem, 8.3vw, 2.55rem);
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    max-width: 92%;
+    margin-top: 12px;
+    font-size: .98rem;
+    line-height: 1.55;
+  }
+
+  .mini-disclaimer {
+    font-size: .82rem;
+    line-height: 1.45;
+  }
+
+  .tendency-card {
+    padding: 14px 13px;
+  }
+
+  .tendency-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .section-subtitle {
+    margin-bottom: 10px;
+    font-size: .84rem;
+  }
+
+  .tendency-list {
+    gap: 7px;
+  }
+
+  .tendency-row {
+    grid-template-columns: 108px 1fr 39px;
+    gap: 7px;
+  }
+
+  .tendency-name {
+    font-size: .84rem;
+    font-weight: 620;
+  }
+
+  .tendency-value {
+    font-size: .85rem;
+    font-weight: 620;
+  }
+
+  .tendency-row.is-result .tendency-name,
+  .tendency-row.is-result .tendency-value {
+    font-weight: 780;
+  }
+
+  .tendency-track {
+    height: 8px;
+  }
+
+  .tendency-note {
+    margin-top: 9px;
+    font-size: .72rem;
+  }
+
+  .closing-card {
+    padding: 15px 15px;
+    font-size: .92rem;
+  }
+}
