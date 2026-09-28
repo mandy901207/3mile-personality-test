@@ -614,9 +614,7 @@ function renderResult(scores, finalRoles) {
     }
   }
 
-  keywordList.innerHTML = keywords
-    .map((word) => `<span class="keyword-chip">${word}</span>`)
-    .join("");
+  keywordList.textContent = keywords.join(" ｜ ");
 
   const displayOrder = ["explore", "challenge", "team", "steady"];
 
