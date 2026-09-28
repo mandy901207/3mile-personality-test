@@ -950,3 +950,103 @@ button, .option-card, .link-btn {
     font-size: .92rem;
   }
 }
+
+
+/* ===== 0929_v4 調整 ===== */
+
+/* 首頁維持約 6～7 分滿的內容密度，不使用 teaser 大卡片 */
+.home-copy {
+  max-width: 680px;
+}
+
+.home-copy p {
+  margin: 0 0 10px;
+}
+
+.home-instruction {
+  font-weight: 650;
+  color: #4f5351;
+}
+
+.teaser-card {
+  display: none !important;
+}
+
+/* 讓首頁整體不要太空，也不要塞滿整個首屏 */
+.home-card {
+  justify-content: center;
+  gap: 0;
+}
+
+.meta-line {
+  margin-top: 18px;
+}
+
+/* 安全提醒改為更精簡版本 */
+.reminder-card p {
+  margin: 8px 0 0;
+}
+
+.reminder-card strong {
+  color: var(--green-dark);
+  font-weight: 800;
+}
+
+.reminder-ending {
+  font-weight: 750;
+  color: var(--ink);
+}
+
+/* 手機版微調：首頁約維持 6～7 分滿 */
+@media (max-width: 640px) {
+  .home-card {
+    min-height: 74dvh;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    margin-bottom: 8px;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 18px;
+  }
+
+  .home-copy {
+    max-width: 94%;
+    font-size: .95rem;
+    line-height: 1.75;
+  }
+
+  .home-copy p {
+    margin-bottom: 10px;
+  }
+
+  .home-instruction {
+    font-weight: 650;
+  }
+
+  .meta-line {
+    margin: 16px 0 10px;
+    font-size: .92rem;
+  }
+
+  .tagline {
+    margin-top: 16px;
+  }
+
+  .mini-disclaimer {
+    margin-top: 8px;
+  }
+
+  .reminder-card {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
