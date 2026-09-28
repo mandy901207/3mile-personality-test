@@ -1,456 +1,655 @@
-const personalities = {
-  collector: {
-    name: "沿途收藏家",
+const ROLE_INFO = {
+  explore: {
     emoji: "📸",
-    tagline: "「來都來了，當然要好好感受這一路。」",
-    description: [
-      "你在意的不只是有沒有騎完，也在意一路看到了什麼、吃到了什麼、去了哪些地方。",
-      "風景、美食、城市特色，甚至某個不起眼的小瞬間，都可能成為你環島裡最值得記住的片段。你很可能就是那個會說「這裡超美」、「這個一定要吃」、「等等這張要拍！」的人。"
-    ],
-    keywords: ["風景", "美食", "體驗", "回憶"],
-    maxScore: 8
+    name: "沿途探索家",
+    max: 11,
+    quote: "「都來了，當然要好好看看這一路會遇到什麼。」",
+    description:
+      "你在意的不只是抵達終點，也會期待沿途的風景、美食、城市和第一次體驗。對你來說，環島好玩的地方，就是每天都有新的發現值得記住。",
+    keywords: ["探索", "體驗", "風景", "回憶"]
   },
-  challenger: {
-    name: "熱血挑戰者",
+  challenge: {
     emoji: "🔥",
-    tagline: "「越難，我越想證明自己做得到。要拼 🔥」",
-    description: [
-      "明明很累、很硬，你卻偏偏更想把它完成。長坡、逆風、最後幾公里雖然痛苦，但也正因為難，才更不想認輸。",
-      "聽到「明天那段超硬」，別人可能開始擔心，你反而有點想知道：到底能有多硬？"
-    ],
-    keywords: ["挑戰", "突破", "不服輸", "毅力"],
-    maxScore: 10
+    name: "熱血挑戰者",
+    max: 9,
+    quote: "「越難，我越想證明自己做得到。要拼 🔥」",
+    description:
+      "長坡、逆風、疲累可能很痛苦，但越有挑戰，你反而越不想認輸。對你來說，環島最有成就感的，就是把原本覺得很難的事情真的完成。",
+    keywords: ["挑戰", "突破", "不服輸", "毅力"]
   },
-  teammate: {
-    name: "隊伍黏著劑",
+  team: {
     emoji: "🤝",
-    tagline: "「去哪裡不是唯一重點，跟誰一起完成才最重要。」",
-    description: [
-      "環島當然要順利完騎，但真正讓這趟旅程變得特別的，往往是一路陪在身邊的那些人。",
-      "你重視夥伴和氣氛，也很容易注意大家的狀況。大家累到不想講話時，你可能就是還能冒出一句話，讓全隊重新笑出來的那個人。"
-    ],
-    keywords: ["夥伴", "氣氛", "陪伴", "一起完成"],
-    maxScore: 10
-  },
-  explorer: {
-    name: "好奇探險家",
-    emoji: "🧭",
-    tagline: "「不知道今天會遇到什麼，才是旅程最好玩的地方。」",
-    description: [
-      "你特別喜歡未知、新鮮感和第一次體驗。每天出發前，都不知道今天會是順風一路飛，還是逆風騎到懷疑人生；是好天氣，還是突然遇上大雨。",
-      "這些未知不一定輕鬆，但對你來說，也正因如此，環島才更有意思。"
-    ],
-    keywords: ["未知", "探索", "新鮮感", "驚喜"],
-    maxScore: 8
+    name: "夥伴黏著劑",
+    max: 9,
+    quote: "「去哪裡很重要，但跟誰一起走更重要。」",
+    description:
+      "你很在意一起騎的人、隊伍氣氛和共同回憶。大家累的時候，你可能就是那個願意陪著撐、聊天打氣，讓整個隊伍重新有精神的人。",
+    keywords: ["夥伴", "陪伴", "氣氛", "一起完成"]
   },
   steady: {
-    name: "穩定節奏型",
     emoji: "🛡️",
-    tagline: "「不是騎最快，是知道怎麼一路騎到底。」",
-    description: [
-      "你不會一味硬撐，而是習慣先看清楚狀況，再決定怎麼做。你知道什麼時候該出力、什麼時候該休息，也會留意裝備、體力和接下來的安排。",
-      "遇到狀況時，你通常比較不容易慌。你不一定是隊伍裡最顯眼的人，卻常常是讓人覺得「有你在就很可靠」的那一個。"
-    ],
-    keywords: ["節奏", "規劃", "冷靜", "可靠"],
-    maxScore: 10
+    name: "穩定節奏型",
+    max: 11,
+    quote: "「不是騎最快，是知道怎麼一路騎到底。」",
+    description:
+      "你習慣找到適合自己的節奏，知道什麼時候該出力、什麼時候該休息。遇到狀況時也比較不容易慌，是那種穩穩完成、讓人覺得很可靠的人。",
+    keywords: ["節奏", "規劃", "冷靜", "可靠"]
   }
 };
 
-
-const doubleRoles = {
-  "collector|challenger": {
-    tagline: "會玩，也會拼。",
-    description: "你既想把一路上的風景、美食和回憶好好收進旅程裡，遇到挑戰時又會燃起「都來了，我一定要做到」的那股勁。"
+const DUAL_INFO = {
+  "challenge|team": {
+    emoji: "🔥🤝",
+    title: "熱血挑戰者 × 夥伴黏著劑",
+    description:
+      "你不只想證明自己做得到，也很在意身邊的夥伴能不能一起完成。遇到困難時，你既有不服輸的衝勁，也會從大家一起努力這件事得到力量。",
+    tagline: "自己不認輸，也不想讓夥伴掉隊。",
+    keywords: ["挑戰", "夥伴", "毅力", "一起完成"]
   },
-  "collector|teammate": {
-    tagline: "美好的地方要記住，美好的回憶要一起創造。",
-    description: "對你來說，一趟好的環島不只有漂亮的風景，更重要的是和一群人一起留下值得回想的片段。"
-  },
-  "collector|explorer": {
-    tagline: "一邊收藏，一邊探索。",
-    description: "你喜歡把沿途值得記住的風景、美食和城市收進旅程，也對下一個沒去過的地方、沒遇過的事情充滿好奇。"
-  },
-  "collector|steady": {
-    tagline: "穩穩騎，也好好感受這一路。",
-    description: "你知道怎麼照顧自己的節奏，也不會因為趕路就錯過沿途值得看的東西。"
-  },
-  "challenger|teammate": {
-    tagline: "自己不認輸，也不想讓隊友掉隊。",
-    description: "你不只想證明自己做得到，也會想把身邊的人一起帶到終點。大家累的時候，你可能既會喊「撐一下！」，又會在旁邊幫忙打氣。"
-  },
-  "challenger|explorer": {
-    tagline: "未知越多，戰意越高。",
-    description: "越沒試過、越不知道會遇到什麼，你反而越想去看看。挑戰對你來說不只是困難，也是一次「來都來了，試試看啊！」的機會。"
-  },
-  "challenger|steady": {
-    tagline: "該穩的時候穩，該拼的時候拼。",
-    description: "你有不服輸、想突破自己的衝勁，也知道怎麼掌握節奏、分配體力。不是一股腦往前衝，而是知道什麼時候該拼到底。"
-  },
-  "teammate|explorer": {
-    tagline: "未知的旅程，有大家在就更好玩。",
-    description: "你喜歡和一群人一起面對未知。今天會遇到什麼不一定重要，重要的是身邊有人可以一起經歷、一起吐槽、一起笑。"
-  },
-  "teammate|steady": {
-    tagline: "顧好自己，也顧得到身邊的人。",
-    description: "你既會注意大家的狀況，也懂得冷靜掌握節奏。隊伍有點亂、有人有點累時，你很可能是那種能讓大家安心的人。"
-  },
-  "explorer|steady": {
-    tagline: "保有好奇，也保有判斷。",
-    description: "你對未知充滿好奇，但不是毫無準備地往前衝。遇到新的狀況時，你通常會先觀察、調整，再繼續看看今天還會發生什麼。"
+  "explore|steady": {
+    emoji: "📸🛡️",
+    title: "沿途探索家 × 穩定節奏型",
+    description:
+      "你會期待一路上的風景、新體驗和不同發現，同時也懂得掌握自己的狀態、穩穩完成旅程。",
+    tagline: "好好探索，也穩穩前進。",
+    keywords: ["探索", "體驗", "節奏", "可靠"]
   }
 };
 
-const questions = [
+const QUESTIONS = [
   {
     id: "q1",
-    type: "single",
     title: "看到前面有個很陡很長的陡坡，你的第一念頭是？",
+    type: "single",
     options: [
-      { id: "a", text: "來啊！都到這裡了，當然要把它騎上去。", scores: { challenger: 2 } },
-      { id: "b", text: "先調整呼吸跟節奏，慢慢來，不要前面就爆掉。", scores: { steady: 2 } },
-      { id: "c", text: "緊跟著大家，一起撐過去！", scores: { teammate: 2 } },
-      { id: "d", text: "算了啦，大不了真的不行就下來牽。", scores: { steady: 1, explorer: 1 } },
-      { id: "e", text: "加油加油，撐到上面搞不好風景超值得！", scores: { challenger: 1, collector: 1 } }
+      {
+        key: "A",
+        text: "「來啊！都到這裡了，當然要騎上去啊，搞不好上面風景很值得！」",
+        score: { challenge: 1, explore: 1 }
+      },
+      {
+        key: "B",
+        text: "「OMG，我真的可以嗎？好吧，我就慢慢騎看看吧……」",
+        score: { steady: 2 }
+      },
+      {
+        key: "C",
+        text: "「大家都還在騎，我就跟緊前面的夥伴，一起慢慢撐上去！」",
+        score: { team: 2 }
+      },
+      {
+        key: "D",
+        text: "「算了啦，大不了真的不行就下來牽。」",
+        score: { steady: 1 }
+      }
     ]
   },
   {
     id: "q2",
-    type: "single",
     title: "騎了一整天，今天真的超累，但好不容易來到一個你從沒去過的城市……",
+    type: "single",
     options: [
-      { id: "a", text: "都來了！先找找附近有什麼必吃、必看的。", scores: { collector: 2 } },
-      { id: "b", text: "雖然真的很累，但難得來一次，還是想出去看看會遇到什麼。", scores: { explorer: 1, collector: 1 } },
-      { id: "c", text: "明天還有路要騎，先整理裝備、補充體力、早點休息。", scores: { steady: 2 } },
-      { id: "d", text: "看大家要去哪，有人揪就一起！", scores: { teammate: 2 } }
+      {
+        key: "A",
+        text: "「都來了！再累也想出去晃晃，看看有什麼必吃、必看，說不定還有意外發現。」",
+        score: { explore: 2 }
+      },
+      {
+        key: "B",
+        text: "「明天還有路要騎，先整理裝備、補充體力、早點休息。」",
+        score: { steady: 2 }
+      },
+      {
+        key: "C",
+        text: "「看大家要去哪，有人揪就一起！難得大家一起來，當然要一起留下回憶。」",
+        score: { team: 2 }
+      }
     ]
   },
   {
     id: "q3",
+    title: "已經騎了很久、真的有點累了，但距離今天的終點只剩最後 5 公里，你心裡的想法是？",
     type: "single",
-    title: "已經騎了很久、真的有點累了，但距離今天的終點只剩最後 5 公里，你會？",
     options: [
-      { id: "a", text: "剩 5 公里而已，撐一下直接騎完！", scores: { challenger: 2 } },
-      { id: "b", text: "不要急，照現在的節奏穩穩騎完就好。", scores: { steady: 2 } },
-      { id: "c", text: "緊跟著前面的夥伴，一起完成比較快。", scores: { teammate: 2 } }
+      {
+        key: "A",
+        text: "「蛤，還有 5 公里喔……都騎到這裡了，不行，怎樣都要騎完！先喝口水，拚啦！」",
+        score: { challenge: 2 }
+      },
+      {
+        key: "B",
+        text: "「不要急，照現在的節奏穩穩騎完就好。」",
+        score: { steady: 2 }
+      },
+      {
+        key: "C",
+        text: "「跟緊前面的夥伴，想到等等可以跟大家一起到終點，就覺得再撐一下也可以！」",
+        score: { team: 2 }
+      },
+      {
+        key: "D",
+        text: "「現在真的好累……但還是很期待前面還會看到什麼風景。」",
+        score: { explore: 2 }
+      }
     ]
   },
   {
     id: "q4",
+    title: "騎到一半突然下大雨，你內心想的事是……？",
     type: "single",
-    title: "騎到一半突然下大雨，原本安排也被打亂了。",
     options: [
-      { id: "a", text: "先確認現在的狀況，看看怎麼調整最安全、最合理。", scores: { steady: 2 } },
-      { id: "b", text: "好吧，跟原本不一樣，但這種意外好像也是環島的一部分。", scores: { explorer: 2 } },
-      { id: "c", text: "先看看大家還好不好，別有人心態先炸掉。", scores: { teammate: 2 } },
-      { id: "d", text: "雨而已！安全許可的話，該騎的還是把它騎完。", scores: { challenger: 2 } },
-      { id: "e", text: "雖然天氣不太好，但雨中的景色好像也有另一種感覺。", scores: { collector: 1, explorer: 1 } }
+      {
+        key: "A",
+        text: "「好吧，這也是環島的一部分，算是體驗到雨天版環島了。」",
+        score: { explore: 2 }
+      },
+      {
+        key: "B",
+        text: "「夥伴們都還在一起奮戰，我也不能落下！」",
+        score: { team: 1, challenge: 1 }
+      },
+      {
+        key: "C",
+        text: "「提醒身邊的夥伴小心一點，路滑不要摔了！」",
+        score: { team: 1, steady: 1 }
+      },
+      {
+        key: "D",
+        text: "「雨而已！颳風下雨我都不怕！」",
+        score: { challenge: 2 }
+      }
     ]
   },
   {
     id: "q5",
+    title: "明天是環島最有挑戰性的一天，睡前你比較像哪一種？",
     type: "single",
-    core: true,
-    title: "明天是環島很重要的一天，睡前你比較像哪一種？",
     options: [
-      { id: "a", text: "先確認明天路線、裝備、補給，東西整理好再睡。", scores: { steady: 2 }, personality: "steady" },
-      { id: "b", text: "看看明天會經過哪裡，有沒有什麼值得期待的風景、美食或地方。", scores: { collector: 2 }, personality: "collector" },
-      { id: "c", text: "想著明天又可以跟大家一起騎、一起玩，能和這群人留下回憶最重要。", scores: { teammate: 2 }, personality: "teammate" },
-      { id: "d", text: "聽說明天那段超硬？很好，我開始期待了，到底有多硬。", scores: { challenger: 2 }, personality: "challenger" },
-      { id: "e", text: "不特別查太多，反而想保留一點『明天會遇到什麼』的驚喜。", scores: { explorer: 2 }, personality: "explorer" }
+      {
+        key: "A",
+        text: "「先確認明天路線、裝備、補給，東西整理好再睡。」",
+        score: { steady: 2 },
+        tieRole: "steady"
+      },
+      {
+        key: "B",
+        text: "「看看明天會經過哪裡，有沒有值得期待的風景、美食，或會遇到什麼沒體驗過的東西。」",
+        score: { explore: 2 },
+        tieRole: "explore"
+      },
+      {
+        key: "C",
+        text: "「睡前還想跟大家聊聊天、討論明天，想到又可以一起騎、一起玩就很期待。」",
+        score: { team: 2 },
+        tieRole: "team"
+      },
+      {
+        key: "D",
+        text: "「聽說明天那段超硬？很好，你引起我的注意了。」",
+        score: { challenge: 2 },
+        tieRole: "challenge"
+      }
     ]
   },
   {
     id: "q6",
-    type: "single",
     title: "如果只能選，你比較想騎哪一種？",
+    type: "single",
     options: [
-      { id: "a", text: "🌊 一路可以看海、沿途很多地方值得停下來看看的路線。", scores: { collector: 2 } },
-      { id: "b", text: "⛰️ 比較硬，但騎完一定超有成就感的路線。", scores: { challenger: 2 } },
-      { id: "c", text: "🗺️ 從來沒去過、對沿途幾乎一無所知的路線。", scores: { explorer: 2 } }
+      {
+        key: "A",
+        icon: "🌊",
+        text: "「沿著海線前進，一路看看海景和沿途風光。」",
+        score: { explore: 2 }
+      },
+      {
+        key: "B",
+        icon: "⛰️",
+        text: "比較陡、比較難，但騎完一定超有成就感的山路。",
+        score: { challenge: 2 }
+      },
+      {
+        key: "C",
+        icon: "🗺️",
+        text: "路況熟悉、有把握，可以穩穩騎完的平路。",
+        score: { steady: 2 }
+      }
     ]
   },
   {
     id: "q7",
-    type: "single",
-    surveyOnly: true,
     title: "環島四大酷刑，硬要選一個，你寧願遇到哪個？",
+    note: "這題不參與人格計分，只做匿名統計。",
+    type: "single",
     options: [
-      { id: "wind", text: "🌬️ 逆風", sub: "每踩一下都覺得有人在把你往後拉。" },
-      { id: "climb", text: "⛰️ 連續爬坡", sub: "轉過一個彎，發現：怎麼還有？" },
-      { id: "rain", text: "🌧️ 下雨", sub: "全身濕、鞋子濕，連靈魂都快濕了。" },
-      { id: "heat", text: "☀️ 高溫曝曬", sub: "一路被太陽烤，感覺自己快變成行動烤肉。" }
+      {
+        key: "wind",
+        icon: "🌬️",
+        text: "逆風",
+        detail: "每踩一下都覺得有人在把你往後拉。"
+      },
+      {
+        key: "climb",
+        icon: "⛰️",
+        text: "連續爬坡",
+        detail: "轉過一個彎，發現：怎麼還有？"
+      },
+      {
+        key: "rain",
+        icon: "🌧️",
+        text: "下雨",
+        detail: "全身濕、鞋子濕，連靈魂都快濕了。"
+      },
+      {
+        key: "heat",
+        icon: "☀️",
+        text: "高溫曝曬",
+        detail: "一路被太陽烤，感覺自己快變成行動烤肉。"
+      }
     ]
   },
   {
     id: "q8",
-    type: "multi",
-    surveyOnly: true,
-    maxSelect: 3,
     title: "如果真的要去環島，你目前最擔心哪些事情？",
-    help: "最多選 3 項",
+    note: "複選題，最多選 3 項。這題不參與人格計分。",
+    type: "multi",
+    maxSelect: 3,
     options: [
-      { id: "stamina", text: "🚴 體力不夠／怕自己騎不完", sub: "擔心長距離騎乘負荷不了。" },
-      { id: "soreness", text: "💪 身體酸痛／連續騎很多天吃不消", sub: "例如腿痠、肩頸不舒服，或每天騎完恢復不了。" },
-      { id: "schedule", text: "⏰ 團體行程與作息適應", sub: "擔心每天集合、騎乘、休息與活動安排較緊湊，自己不一定適應。" },
-      { id: "safety", text: "🚗 騎乘安全", sub: "擔心摔車、車禍、道路車流量大，或對道路騎乘感到害怕。" },
-      { id: "alone", text: "👥 沒有認識的人一起參加", sub: "擔心自己一個人報名、融不進團體。" },
-      { id: "budget", text: "💰 預算考量", sub: "擔心報名、裝備、車輛或其他相關花費。" },
-      { id: "gear", text: "🚲 單車／裝備方面的問題", sub: "例如沒有適合的單車、不知道要準備什麼，或擔心途中車輛故障。" },
-      { id: "time", text: "📚 個人時間是否能配合", sub: "擔心訓練、認證與正式環島和課業、打工或其他安排衝突。" },
-      { id: "other", text: "✏️ 其他", sub: "有其他顧慮也可以自己填。", allowsText: true }
+      {
+        key: "fitness",
+        icon: "🚴",
+        text: "體力不夠／怕自己騎不完",
+        detail: "擔心長距離騎乘負荷不了。"
+      },
+      {
+        key: "soreness",
+        icon: "💪",
+        text: "身體酸痛／連續騎很多天吃不消",
+        detail: "擔心腿痠、肩頸不舒服、身體恢復不了等問題。"
+      },
+      {
+        key: "schedule",
+        icon: "⏰",
+        text: "團體行程與作息適應",
+        detail: "擔心每天的集合、騎乘、休息與活動安排較緊湊，自己可能不容易適應。"
+      },
+      {
+        key: "safety",
+        icon: "🚗",
+        text: "騎乘安全",
+        detail: "例如擔心摔車、車禍、道路車流量大，或對道路騎乘感到害怕。"
+      },
+      {
+        key: "friends",
+        icon: "👥",
+        text: "沒有認識的人一起參加",
+        detail: "擔心自己一個人報名、融不進團體或不知道會跟誰一起。"
+      },
+      {
+        key: "budget",
+        icon: "💰",
+        text: "預算考量",
+        detail: "擔心報名、裝備、車輛或其他相關花費。"
+      },
+      {
+        key: "gear",
+        icon: "🚲",
+        text: "單車／裝備方面的問題",
+        detail: "例如沒有適合的單車、不知道需要準備哪些裝備，或擔心途中車輛故障。"
+      },
+      {
+        key: "time",
+        icon: "📚",
+        text: "個人時間是否能配合",
+        detail: "擔心訓練、認證與正式環島和課業、打工或其他既有安排衝突。"
+      },
+      {
+        key: "other",
+        icon: "✏️",
+        text: "其他",
+        detail: "如果還有其他擔心，也可以告訴我們。"
+      }
     ]
   }
 ];
 
-const state = {
-  currentIndex: 0,
-  answers: {}
-};
+const homePage = document.getElementById("homePage");
+const quizPage = document.getElementById("quizPage");
+const resultPage = document.getElementById("resultPage");
 
-const startScreen = document.getElementById("start-screen");
-const quizScreen = document.getElementById("quiz-screen");
-const resultScreen = document.getElementById("result-screen");
-const questionWrap = document.getElementById("question-wrap");
-const progressText = document.getElementById("progress-text");
-const progressBar = document.getElementById("progress-bar");
-const backBtn = document.getElementById("back-btn");
-const nextBtn = document.getElementById("next-btn");
+const startBtn = document.getElementById("startBtn");
+const nextBtn = document.getElementById("nextBtn");
+const backBtn = document.getElementById("backBtn");
+const retryBtn = document.getElementById("retryBtn");
+const homeBtn = document.getElementById("homeBtn");
 
-function showScreen(screen) {
-  [startScreen, quizScreen, resultScreen].forEach(el => el.classList.remove("active"));
-  screen.classList.add("active");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+const questionArea = document.getElementById("questionArea");
+const quizError = document.getElementById("quizError");
+
+let currentQuestion = 0;
+let answers = {};
+let otherText = "";
+
+function showPage(pageEl) {
+  [homePage, quizPage, resultPage].forEach((page) => page.classList.remove("active-page"));
+  pageEl.classList.add("active-page");
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function startQuiz() {
+  currentQuestion = 0;
+  answers = {};
+  otherText = "";
+  showPage(quizPage);
+  renderQuestion();
+}
+
+function restartQuiz() {
+  currentQuestion = 0;
+  answers = {};
+  otherText = "";
+  showPage(quizPage);
+  renderQuestion();
+}
+
+function goHome() {
+  currentQuestion = 0;
+  answers = {};
+  otherText = "";
+  showPage(homePage);
 }
 
 function renderQuestion() {
-  const q = questions[state.currentIndex];
-  progressText.textContent = `${state.currentIndex + 1} / ${questions.length}`;
-  progressBar.style.width = `${((state.currentIndex + 1) / questions.length) * 100}%`;
-  backBtn.style.visibility = state.currentIndex === 0 ? "hidden" : "visible";
-  nextBtn.textContent = state.currentIndex === questions.length - 1 ? "看結果" : "下一題";
+  const q = QUESTIONS[currentQuestion];
+  quizError.textContent = "";
 
-  const saved = state.answers[q.id];
-  const optionsHtml = q.options.map(opt => {
-    const isMulti = q.type === "multi";
-    const selected = isMulti ? (saved?.selected || []).includes(opt.id) : saved?.selected === opt.id;
-    return `
-      <label class="option ${selected ? "selected" : ""}" data-option-id="${opt.id}">
-        <input type="${isMulti ? "checkbox" : "radio"}" name="${q.id}" value="${opt.id}" ${selected ? "checked" : ""} />
-        <div>
-          <div class="option-title">${opt.text}</div>
-          ${opt.sub ? `<div class="option-sub">${opt.sub}</div>` : ""}
-        </div>
-      </label>`;
-  }).join("");
+  progressBar.style.width = `${((currentQuestion + 1) / QUESTIONS.length) * 100}%`;
+  progressText.textContent = `${currentQuestion + 1} / ${QUESTIONS.length}`;
+  backBtn.style.visibility = currentQuestion === 0 ? "hidden" : "visible";
+  nextBtn.textContent = currentQuestion === QUESTIONS.length - 1 ? "看結果" : "下一題";
 
-  questionWrap.innerHTML = `
-    <div class="question-kicker">Q${state.currentIndex + 1}</div>
+  const selected = answers[q.id];
+
+  let html = `
+    <p class="question-kicker">Q${currentQuestion + 1}</p>
     <h2 class="question-title">${q.title}</h2>
-    ${q.help ? `<div class="question-help">${q.help}</div>` : ""}
-    <div class="option-list">${optionsHtml}</div>
-    ${q.type === "multi" ? `<div id="multi-error" class="error-text"></div>` : ""}
-    ${q.id === "q8" && saved?.selected?.includes("other") ? `<input id="other-text" class="other-input" type="text" maxlength="100" placeholder="請輸入其他顧慮" value="${escapeHtml(saved.otherText || "")}">` : ""}
+    ${q.note ? `<p class="question-note">${q.note}</p>` : ""}
+    <div class="options">
   `;
 
-  bindOptionEvents(q);
-}
+  q.options.forEach((option) => {
+    let isSelected = false;
 
-function bindOptionEvents(q) {
-  const optionEls = questionWrap.querySelectorAll(".option");
-  optionEls.forEach(label => {
-    const input = label.querySelector("input");
-    input.addEventListener("change", () => {
-      if (q.type === "single") {
-        state.answers[q.id] = { selected: input.value };
-        optionEls.forEach(el => el.classList.remove("selected"));
-        label.classList.add("selected");
-      } else {
-        const checked = [...questionWrap.querySelectorAll('input[type="checkbox"]:checked')].map(el => el.value);
-        if (checked.length > q.maxSelect) {
-          input.checked = false;
-          document.getElementById("multi-error").textContent = `最多只能選 ${q.maxSelect} 項。`;
-          return;
-        }
-        document.getElementById("multi-error").textContent = "";
-        state.answers[q.id] = {
-          selected: checked,
-          otherText: state.answers[q.id]?.otherText || ""
-        };
-        renderQuestion();
-      }
-    });
+    if (q.type === "single") {
+      isSelected = selected === option.key;
+    } else {
+      isSelected = Array.isArray(selected) && selected.includes(option.key);
+    }
+
+    html += `
+      <button
+        type="button"
+        class="option-card ${isSelected ? "selected" : ""}"
+        data-option="${option.key}"
+      >
+        <span class="option-label">${option.icon ? `${option.icon} ` : ""}${option.text}</span>
+        ${option.detail ? `<span class="option-detail">${option.detail}</span>` : ""}
+      </button>
+    `;
   });
 
-  const otherText = document.getElementById("other-text");
-  if (otherText) {
-    otherText.addEventListener("input", () => {
-      if (!state.answers[q.id]) state.answers[q.id] = { selected: ["other"], otherText: "" };
-      state.answers[q.id].otherText = otherText.value;
+  html += "</div>";
+
+  if (q.id === "q8" && Array.isArray(selected) && selected.includes("other")) {
+    html += `
+      <textarea
+        id="otherInput"
+        class="other-input"
+        maxlength="120"
+        placeholder="其他想補充的事情（選填）"
+      >${escapeHtml(otherText)}</textarea>
+    `;
+  }
+
+  questionArea.innerHTML = html;
+
+  questionArea.querySelectorAll(".option-card").forEach((button) => {
+    button.addEventListener("click", () => selectOption(button.dataset.option));
+  });
+
+  const otherInput = document.getElementById("otherInput");
+  if (otherInput) {
+    otherInput.addEventListener("input", (event) => {
+      otherText = event.target.value;
     });
   }
 }
 
-function validateCurrent() {
-  const q = questions[state.currentIndex];
-  const ans = state.answers[q.id];
-  if (!ans || (q.type === "single" && !ans.selected) || (q.type === "multi" && (!ans.selected || ans.selected.length === 0))) {
-    alert("請先選擇答案再繼續。");
+function selectOption(optionKey) {
+  const q = QUESTIONS[currentQuestion];
+  quizError.textContent = "";
+
+  if (q.type === "single") {
+    answers[q.id] = optionKey;
+  } else {
+    const selected = Array.isArray(answers[q.id]) ? [...answers[q.id]] : [];
+    const index = selected.indexOf(optionKey);
+
+    if (index >= 0) {
+      selected.splice(index, 1);
+      if (optionKey === "other") otherText = "";
+    } else {
+      if (selected.length >= q.maxSelect) {
+        quizError.textContent = `這題最多選 ${q.maxSelect} 項喔！`;
+        return;
+      }
+      selected.push(optionKey);
+    }
+
+    answers[q.id] = selected;
+  }
+
+  renderQuestion();
+}
+
+function validateCurrentQuestion() {
+  const q = QUESTIONS[currentQuestion];
+  const selected = answers[q.id];
+
+  if (q.type === "single" && !selected) {
+    quizError.textContent = "先選一個最符合你直覺的答案吧！";
     return false;
   }
-  if (q.id === "q8" && ans.selected.includes("other") && !(ans.otherText || "").trim()) {
-    alert("你有勾選『其他』，請再填寫內容。");
+
+  if (q.type === "multi" && (!Array.isArray(selected) || selected.length === 0)) {
+    quizError.textContent = "至少選 1 項再繼續喔！";
     return false;
   }
+
   return true;
 }
 
-function calculateResult() {
-  const raw = { collector: 0, challenger: 0, teammate: 0, explorer: 0, steady: 0 };
+function goNext() {
+  if (!validateCurrentQuestion()) return;
 
-  questions.filter(q => !q.surveyOnly).forEach(q => {
-    const ans = state.answers[q.id];
-    const opt = q.options.find(o => o.id === ans?.selected);
-    if (!opt || !opt.scores) return;
-    Object.entries(opt.scores).forEach(([key, value]) => raw[key] += value);
+  if (currentQuestion < QUESTIONS.length - 1) {
+    currentQuestion += 1;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    showResult();
+  }
+}
+
+function goBack() {
+  if (currentQuestion === 0) return;
+  currentQuestion -= 1;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function calculateScores() {
+  const scores = {
+    explore: 0,
+    challenge: 0,
+    team: 0,
+    steady: 0
+  };
+
+  QUESTIONS.slice(0, 6).forEach((q) => {
+    const selectedKey = answers[q.id];
+    const option = q.options.find((item) => item.key === selectedKey);
+
+    if (!option || !option.score) return;
+
+    Object.entries(option.score).forEach(([role, points]) => {
+      scores[role] += points;
+    });
   });
 
-  const rates = {};
-  Object.keys(personalities).forEach(key => {
-    rates[key] = raw[key] / personalities[key].maxScore;
-  });
+  return scores;
+}
 
-  const maxRate = Math.max(...Object.values(rates));
-  let leaders = Object.keys(rates).filter(key => Math.abs(rates[key] - maxRate) < 1e-9);
+function getTopRoles(scores) {
+  // 用交叉相乘比較分數比例，避免浮點數同分判斷誤差。
+  const roles = Object.keys(ROLE_INFO);
 
-  let finalKey = leaders[0];
-  let unresolvedTie = leaders.length > 1;
+  let tops = [roles[0]];
 
-  if (leaders.length > 1) {
-    const q5 = questions.find(q => q.id === "q5");
-    const q5Answer = state.answers.q5?.selected;
-    const q5Option = q5.options.find(o => o.id === q5Answer);
-    if (q5Option?.personality && leaders.includes(q5Option.personality)) {
-      finalKey = q5Option.personality;
-      leaders = [finalKey];
-      unresolvedTie = false;
+  for (let i = 1; i < roles.length; i += 1) {
+    const role = roles[i];
+    const currentTop = tops[0];
+
+    const left = scores[role] * ROLE_INFO[currentTop].max;
+    const right = scores[currentTop] * ROLE_INFO[role].max;
+
+    if (left > right) {
+      tops = [role];
+    } else if (left === right) {
+      tops.push(role);
     }
   }
 
-  let doubleKeys = null;
-  if (unresolvedTie) {
-    const stableOrder = ["collector", "challenger", "teammate", "explorer", "steady"];
-    const sorted = [...leaders].sort((a, b) => {
-      if (raw[b] !== raw[a]) return raw[b] - raw[a];
-      return stableOrder.indexOf(a) - stableOrder.indexOf(b);
-    });
-    doubleKeys = sorted.slice(0, 2);
+  return tops;
+}
+
+function applyQ5TieBreaker(topRoles) {
+  if (topRoles.length <= 1) return topRoles;
+
+  const selectedQ5 = answers.q5;
+  const q5 = QUESTIONS.find((q) => q.id === "q5");
+  const option = q5.options.find((item) => item.key === selectedQ5);
+  const tieRole = option?.tieRole;
+
+  if (tieRole && topRoles.includes(tieRole)) {
+    return [tieRole];
   }
 
-  return { finalKey, raw, rates, leaders, unresolvedTie, doubleKeys };
+  return topRoles;
 }
 
-function renderMatchRates(rates, highlightedKeys) {
-  const list = document.getElementById("match-list");
-  const order = ["collector", "challenger", "teammate", "explorer", "steady"];
-  list.innerHTML = order.map(key => {
-    const p = personalities[key];
-    const percent = Math.round(rates[key] * 100);
-    const active = highlightedKeys.includes(key) ? " active" : "";
-    return `
-      <div class="match-row${active}">
-        <div class="match-label"><span>${p.emoji}</span><span>${escapeHtml(p.name)}</span></div>
-        <div class="match-bar"><span style="width:${percent}%"></span></div>
-        <div class="match-value">${percent}%</div>
-      </div>`;
-  }).join("");
+function showResult() {
+  const scores = calculateScores();
+  const topRoles = getTopRoles(scores);
+  const finalRoles = applyQ5TieBreaker(topRoles);
+
+  renderResult(scores, finalRoles);
+  showPage(resultPage);
 }
 
-function renderResult() {
-  const result = calculateResult();
-  const eyebrow = document.getElementById("result-eyebrow");
-  const emojiEl = document.getElementById("result-emoji");
-  const nameEl = document.getElementById("result-name");
-  const taglineEl = document.getElementById("result-tagline");
-  const descriptionEl = document.getElementById("result-description");
-  const keywordBox = document.getElementById("keyword-box");
-  const keywordList = document.getElementById("result-keywords");
+function renderResult(scores, finalRoles) {
+  const resultEmoji = document.getElementById("resultEmoji");
+  const resultTitle = document.getElementById("resultTitle");
+  const resultQuote = document.getElementById("resultQuote");
+  const resultDescription = document.getElementById("resultDescription");
+  const dualBadge = document.getElementById("dualBadge");
+  const resultTagline = document.getElementById("resultTagline");
+  const keywordList = document.getElementById("keywordList");
+  const tendencyList = document.getElementById("tendencyList");
 
-  if (result.unresolvedTie && result.doubleKeys?.length === 2) {
-    const [a, b] = result.doubleKeys;
-    const p1 = personalities[a];
-    const p2 = personalities[b];
-    const pairKey = [a, b].sort((x, y) => ["collector", "challenger", "teammate", "explorer", "steady"].indexOf(x) - ["collector", "challenger", "teammate", "explorer", "steady"].indexOf(y)).join("|");
-    const combo = doubleRoles[pairKey];
+  let keywords = [];
 
-    eyebrow.textContent = "你解鎖了少見的雙重角色！";
-    emojiEl.textContent = `${p1.emoji} × ${p2.emoji}`;
-    emojiEl.classList.add("double-emoji");
-    nameEl.textContent = `${p1.name} × ${p2.name}`;
-    taglineEl.textContent = combo ? combo.tagline : "兩種特質，同時上線。";
-    descriptionEl.innerHTML = `<p>${escapeHtml(combo ? combo.description : "你同時帶著兩種不同的環島特質，會依照情境展現不同的一面。")}</p>`;
-    keywordBox.hidden = true;
-    renderMatchRates(result.rates, result.doubleKeys);
+  if (finalRoles.length === 1) {
+    const role = finalRoles[0];
+    const info = ROLE_INFO[role];
+
+    resultEmoji.textContent = info.emoji;
+    resultTitle.textContent = info.name;
+    resultQuote.textContent = info.quote;
+    resultDescription.textContent = info.description;
+
+    dualBadge.classList.add("hidden");
+    resultTagline.classList.add("hidden");
+    resultTagline.textContent = "";
+
+    keywords = info.keywords;
   } else {
-    const p = personalities[result.finalKey];
-    eyebrow.textContent = "你的環島角色是";
-    emojiEl.textContent = p.emoji;
-    emojiEl.classList.remove("double-emoji");
-    nameEl.textContent = p.name;
-    taglineEl.textContent = p.tagline;
-    descriptionEl.innerHTML = p.description.map(text => `<p>${escapeHtml(text)}</p>`).join("");
-    keywordBox.hidden = false;
-    keywordList.innerHTML = p.keywords.map(keyword => `<span class="keyword">${escapeHtml(keyword)}</span>`).join("");
-    renderMatchRates(result.rates, [result.finalKey]);
+    const key = [...finalRoles].sort().join("|");
+    const dual = DUAL_INFO[key];
+
+    if (dual) {
+      resultEmoji.textContent = dual.emoji;
+      resultTitle.textContent = dual.title;
+      resultQuote.textContent = "";
+      resultDescription.textContent = dual.description;
+
+      dualBadge.classList.remove("hidden");
+      resultTagline.classList.remove("hidden");
+      resultTagline.textContent = dual.tagline;
+
+      keywords = dual.keywords;
+    } else {
+      // 理論上目前配分只會留下兩組雙重角色；保留 fallback 以防未來改題目。
+      resultEmoji.textContent = finalRoles.map((role) => ROLE_INFO[role].emoji).join("");
+      resultTitle.textContent = finalRoles.map((role) => ROLE_INFO[role].name).join(" × ");
+      resultQuote.textContent = "";
+      resultDescription.textContent = "你的作答同時展現了兩種很接近的環島傾向。";
+
+      dualBadge.classList.remove("hidden");
+      resultTagline.classList.add("hidden");
+
+      keywords = [...new Set(finalRoles.flatMap((role) => ROLE_INFO[role].keywords))].slice(0, 4);
+    }
   }
 
-  console.log("匿名測驗結果（目前尚未送出到雲端）", {
-    answers: state.answers,
-    result
-  });
+  keywordList.innerHTML = keywords
+    .map((word) => `<span class="keyword-chip">${word}</span>`)
+    .join("");
+
+  const displayOrder = ["explore", "challenge", "team", "steady"];
+
+  tendencyList.innerHTML = displayOrder
+    .map((role) => {
+      const info = ROLE_INFO[role];
+      const percent = Math.round((scores[role] / info.max) * 100);
+      const isResult = finalRoles.includes(role);
+
+      return `
+        <div class="tendency-row ${isResult ? "is-result" : ""}">
+          <div class="tendency-name">${info.emoji} ${info.name}</div>
+          <div class="tendency-track">
+            <div class="tendency-fill" style="width: ${percent}%"></div>
+          </div>
+          <div class="tendency-value">${percent}%</div>
+        </div>
+      `;
+    })
+    .join("");
 }
 
-function escapeHtml(str) {
-  return String(str)
+function escapeHtml(value) {
+  return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
+    .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
 
-document.getElementById("start-btn").addEventListener("click", () => {
-  state.currentIndex = 0;
-  renderQuestion();
-  showScreen(quizScreen);
-});
-
-backBtn.addEventListener("click", () => {
-  if (state.currentIndex > 0) {
-    state.currentIndex -= 1;
-    renderQuestion();
-  }
-});
-
-nextBtn.addEventListener("click", () => {
-  if (!validateCurrent()) return;
-  if (state.currentIndex < questions.length - 1) {
-    state.currentIndex += 1;
-    renderQuestion();
-  } else {
-    try {
-      renderResult();
-      showScreen(resultScreen);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (error) {
-      console.error("結果頁產生失敗：", error);
-      alert("結果頁載入時發生問題，請重新整理後再試一次。若仍無法顯示，請告訴第 3 哩工作人員。");
-    }
-  }
-});
-
-document.getElementById("restart-btn").addEventListener("click", () => {
-  state.currentIndex = 0;
-  state.answers = {};
-  renderQuestion();
-  showScreen(quizScreen);
-});
+startBtn.addEventListener("click", startQuiz);
+nextBtn.addEventListener("click", goNext);
+backBtn.addEventListener("click", goBack);
+retryBtn.addEventListener("click", restartQuiz);
+homeBtn.addEventListener("click", goHome);
