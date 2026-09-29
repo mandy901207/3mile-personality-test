@@ -1050,3 +1050,4 @@ button, .option-card, .link-btn {
     padding-bottom: 16px;
   }
 }
+\n\n/* ===== 0929_v5 adjustments ===== */\n.home-copy-card {\n  width: min(100%, 680px);\n  margin: 18px auto 0;\n  padding: 18px 20px;\n  border-radius: 20px;\n  background: #f1ece3;\n  color: #505452;\n  text-align: center;\n}\n\n.home-copy-card p { margin: 0; }\n.home-copy-card .home-instruction {\n  margin-top: 10px;\n  font-weight: 600;\n  color: #414644;\n}\n\n.option-card .option-label { font-weight: 620; }\n.option-card.survey-option .option-label { font-weight: 850; }\n\n@media (max-width: 640px) {\n  .home-copy-card {\n    width: 94%;\n    margin-top: 16px;\n    padding: 16px;\n    border-radius: 18px;\n    font-size: .94rem;\n    line-height: 1.72;\n  }\n  .home-copy-card .home-instruction { margin-top: 9px; }\n  .option-card .option-label { font-weight: 620; }\n  .option-card.survey-option .option-label { font-weight: 850; }\n}\n

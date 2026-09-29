@@ -219,7 +219,7 @@ const QUESTIONS = [
   {
     id: "q7",
     title: "環島四大酷刑，硬要選一個，你寧願遇到哪個？",
-    note: "這題不參與人格計分，只做匿名統計。",
+    
     type: "single",
     options: [
       {
@@ -251,7 +251,7 @@ const QUESTIONS = [
   {
     id: "q8",
     title: "如果真的要去環島，你目前最擔心哪些事情？",
-    note: "複選題，最多選 3 項。這題不參與人格計分。",
+    note: "複選題，最多選 3 項。",
     type: "multi",
     maxSelect: 3,
     options: [
@@ -391,7 +391,7 @@ function renderQuestion() {
     html += `
       <button
         type="button"
-        class="option-card ${isSelected ? "selected" : ""}"
+        class="option-card ${isSelected ? "selected" : ""} ${["q7", "q8"].includes(q.id) ? "survey-option" : ""}"
         data-option="${option.key}"
       >
         <span class="option-label">${option.icon ? `${option.icon} ` : ""}${option.text}</span>
