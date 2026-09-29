@@ -1088,3 +1088,77 @@ button, .option-card, .link-btn {
   .option-card .option-label { font-weight: 620; }
   .option-card.survey-option .option-label { font-weight: 850; }
 }
+
+
+/* ===== 0929_v7 首頁層次調整 ===== */
+
+/* 原本首頁說明取消卡片框，回到一般文字 */
+.home-copy,
+.home-copy-card {
+  width: min(100%, 680px);
+  margin: 18px auto 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #555;
+  text-align: center;
+}
+
+.home-copy p,
+.home-copy-card p {
+  margin: 0 0 10px;
+}
+
+.home-copy .home-instruction,
+.home-copy-card .home-instruction {
+  margin-top: 6px;
+  font-weight: 600;
+  color: #4a4f4d;
+}
+
+/* 角色預告改成唯一的淡色重點卡 */
+.teaser-card {
+  display: block !important;
+  width: min(100%, 680px);
+  margin: 16px auto 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: #f1ece3;
+  color: #404442;
+  text-align: center;
+  box-shadow: none;
+}
+
+.teaser-card p {
+  margin: 0;
+}
+
+.teaser-card .teaser-question {
+  margin-top: 8px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .home-copy,
+  .home-copy-card {
+    width: 94%;
+    margin-top: 16px;
+    padding: 0;
+    font-size: .94rem;
+    line-height: 1.72;
+  }
+
+  .teaser-card {
+    width: 94%;
+    margin-top: 14px;
+    padding: 14px 15px;
+    border-radius: 18px;
+    font-size: .93rem;
+    line-height: 1.65;
+  }
+
+  .teaser-card .teaser-question {
+    margin-top: 7px;
+  }
+}
