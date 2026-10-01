@@ -1162,3 +1162,23 @@ button, .option-card, .link-btn {
     margin-top: 7px;
   }
 }
+
+
+/* ===== 1002_v2 ===== */
+.ig-gradient-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ig-gradient-icon svg {
+  display: block;
+}
+
+.reminder-card p {
+  margin: 10px 0 0;
+}
+
+.reminder-card .reminder-ending {
+  margin-top: 16px;
+}
