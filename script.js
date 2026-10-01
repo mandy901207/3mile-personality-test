@@ -559,7 +559,58 @@ function showResult() {
   showPage(resultPage);
 }
 
+
+function normalizeDisplayPercents(scores) {
+  const roles = Object.keys(ROLE_INFO);
+  const rawRates = roles.map((role) => ({
+    role,
+    rate: scores[role] / ROLE_INFO[role].max
+  }));
+
+  const totalRate = rawRates.reduce((sum, item) => sum + item.rate, 0);
+
+  if (totalRate === 0) {
+    return {
+      explore: 25,
+      challenge: 25,
+      team: 25,
+      steady: 25
+    };
+  }
+
+  const exact = rawRates.map((item) => {
+    const value = (item.rate / totalRate) * 100;
+    return {
+      role: item.role,
+      exact: value,
+      floor: Math.floor(value),
+      remainder: value - Math.floor(value)
+    };
+  });
+
+  let assigned = exact.reduce((sum, item) => sum + item.floor, 0);
+  let remaining = 100 - assigned;
+
+  exact
+    .sort((a, b) => b.remainder - a.remainder)
+    .forEach((item) => {
+      if (remaining > 0) {
+        item.floor += 1;
+        remaining -= 1;
+      }
+    });
+
+  const result = {};
+  exact.forEach((item) => {
+    result[item.role] = item.floor;
+  });
+
+  return result;
+}
+
 function renderResult(scores, finalRoles) {
+  const displayPercents = normalizeDisplayPercents(scores);
+
   const resultEmoji = document.getElementById("resultEmoji");
   const resultTitle = document.getElementById("resultTitle");
   const resultQuote = document.getElementById("resultQuote");
@@ -621,7 +672,7 @@ function renderResult(scores, finalRoles) {
   tendencyList.innerHTML = displayOrder
     .map((role) => {
       const info = ROLE_INFO[role];
-      const percent = Math.round((scores[role] / info.max) * 100);
+      const percent = displayPercents[role];
       const isResult = finalRoles.includes(role);
 
       return `
