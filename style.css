@@ -1182,3 +1182,10 @@ button, .option-card, .link-btn {
 .reminder-card .reminder-ending {
   margin-top: 16px;
 }
+
+
+/* ===== 1002_v3 ===== */
+/* 微調 Instagram icon 的垂直位置，讓視覺中心更貼近右側兩行文字 */
+.ig-gradient-icon {
+  transform: translateY(3px);
+}
